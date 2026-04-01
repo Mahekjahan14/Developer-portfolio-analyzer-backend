@@ -1,11 +1,11 @@
-# Use Java 17
-FROM openjdk:17-jdk-slim
-
-# Set working directory
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copy jar file
-COPY target/*.jar app.jar
-
-# Run application
-ENTRYPOINT ["java","-jar","app.jar"]
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 9090
+ENTRYPOINT ["java", "-jar", "app.jar"]
