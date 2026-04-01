@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:9090";
+const BASE_URL = "https://portfolio-backend-1v4e.onrender.com";
 
 export const parsePortfolioData = (rawData) => {
   const lines = rawData.split("\n").filter(line => line.trim());
